@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Uninstall pdfslim Services installed system-wide via the .pkg.
+#
+# Removes the .workflow bundles from /Library/Services/, deregisters
+# the pkgutil receipt, refreshes the Services menu, then removes
+# itself.
+#
+# Usage:
+#   sudo pdfslim-uninstall
+#
+# Does not touch any per-user install in ~/Library/Services/. If you
+# installed pdfslim via 'git clone + ./install.sh', use the repo's
+# './uninstall.sh' instead.
+
+set -euo pipefail
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "error: must run as root (use sudo)" >&2
+    exit 1
+fi
+
+BUNDLES=(
+    "/Library/Services/PDF Slim - Light (Print, 300dpi).workflow"
+    "/Library/Services/PDF Slim - Medium (eBook, 150dpi).workflow"
+)
+
+echo "==> removing PDF Slim Services"
+for b in "${BUNDLES[@]}"; do
+    rm -rf "$b"
+done
+
+echo "==> deregistering pkg receipt"
+pkgutil --forget rs.rbt.pdfslim >/dev/null 2>&1 || true
+
+echo "==> refreshing Services menu"
+/System/Library/CoreServices/pbs -update >/dev/null 2>&1 || true
+
+echo "==> removing this script"
+rm -f /usr/local/bin/pdfslim-uninstall
+
+echo "done."

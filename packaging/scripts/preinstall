@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# Block install if Ghostscript ('gs') is not on PATH.
+#
+# pdfslim shells out to 'gs' at runtime via subprocess. Without it the
+# Services install successfully but fail silently when invoked, which
+# is a worse user experience than refusing the install up front.
+
+set -euo pipefail
+
+# 'installer' runs scripts as root with a stripped PATH. Cover the
+# common install prefixes Ghostscript binaries land in.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/opt/local/bin:$PATH"
+
+if command -v gs >/dev/null 2>&1; then
+    exit 0
+fi
+
+cat >&2 <<'EOF'
+Ghostscript ('gs') is required by pdfslim but is not installed on this Mac.
+
+Install Ghostscript first by downloading the signed installer:
+
+    https://pages.uoregon.edu/koch/
+
+Look near the top of that page for the latest 'Ghostscript-X.Y.Z.pkg'
+(signed and notarized; maintained by Richard Koch as part of MacTeX).
+Double-click the downloaded file to install, then re-run this installer.
+
+(Developers: 'brew install ghostscript' also works.)
+EOF
+exit 1

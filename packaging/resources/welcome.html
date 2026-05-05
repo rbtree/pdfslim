@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: -apple-system, system-ui, sans-serif; padding: 20px; line-height: 1.5; color: #1d1d1f; }
+h1 { font-size: 18px; margin: 0 0 12px 0; }
+ul { padding-left: 20px; margin: 8px 0; }
+li { margin: 4px 0; }
+.note { font-size: 13px; color: #6e6e73; margin-top: 16px; }
+</style>
+</head>
+<body>
+<h1>PDF Slim</h1>
+<p>This installer adds two macOS Finder Services for compressing PDFs:</p>
+<ul>
+  <li><b>PDF Slim - Light</b> (Print, 300dpi) - around 89% size reduction, archival quality</li>
+  <li><b>PDF Slim - Medium</b> (eBook, 150dpi) - around 94% size reduction, sweet spot</li>
+</ul>
+<p>After install, right-click any PDF in Finder and choose <b>Services</b> to use them. The compressed file appears alongside the original; the original is never modified.</p>
+<p class="note"><b>Requires Ghostscript</b>. The installer will refuse to proceed if 'gs' is not on PATH. Install it first by visiting https://pages.uoregon.edu/koch/ and downloading the latest Ghostscript-X.Y.Z.pkg (signed and notarized; maintained by Richard Koch as part of MacTeX). Developers: 'brew install ghostscript' also works.</p>
+</body>
+</html>

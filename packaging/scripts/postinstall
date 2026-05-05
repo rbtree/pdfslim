@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# Refresh the Services menu so the newly installed Services show up
+# without a logout. 'pbs -update' rebuilds the cached service registrations
+# at the system level. 'killall Finder' from root would only affect root's
+# Finder process, not the user's, so we deliberately do not run it here.
+
+set -euo pipefail
+
+/System/Library/CoreServices/pbs -update >/dev/null 2>&1 || true
+
+exit 0
